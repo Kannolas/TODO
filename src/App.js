@@ -5,7 +5,7 @@ import TodoContainer from "./components/TodoContainer";
 import './styles.css'
 
 function App() {
-  const notif = document.querySelectorAll(".added")
+  
   const [todos, setTodos]= useState([])
   const[isShowAdded, setShowAdded] = useState(false)
   const [isDeleted, setIsDeleted] = useState(false)
@@ -17,7 +17,7 @@ function App() {
         task: input,
         completed:false
       }
-      setTodos([...todos, newItem])
+      setTodos([newItem, ...todos])
       setShowAdded(true)
       setTimeout(()=>{
         setShowAdded(false)
@@ -26,6 +26,7 @@ function App() {
   }
 
   useEffect(()=>{
+    const notif = document.querySelectorAll(".added")
     if(isShowAdded){
       notif[0].classList.add("showadded")
     }
@@ -56,9 +57,9 @@ function App() {
   }
   return (
     <div className="App">
-      <header><h1>Количество задач: {todos.length}</h1></header>
+      <header><div>Количество задач: {todos.length}</div></header>
       <TodoContainer add={AddTask}/>
-      {todos.reverse().map((todo)=>{
+      {todos.map((todo)=>{
       return(
         <TodoItem todo = {todo} id = {todo.id} remove={DeleteTask} toggleT={ToggleTask}/>
       )})}
